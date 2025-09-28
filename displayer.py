@@ -1,20 +1,99 @@
 import tkinter as tk
+from tkinter import PhotoImage
+
+import time
+
+
+# import pygame
+# from pygame import mixer
 
 # Create the main window
 root = tk.Tk()
 root.title("Pose Displayer")
-root.geometry("1920x1080") # Set window size (width x height)
+root.geometry("800x600") 
+
+poses = ["images/rest.png", "images/peace.png", 
+         "images/rest.png", "images/pointer.png",
+         "images/rest.png" , "images/pointerAndIndex.png",
+         "images/rest.png" , "images/fingersCrossed.png",
+         "images/rest.png", "images/fist.png"]
 
 # Create a label widget
-label = tk.Label(root, text="Hello, Tkinter!")
-label.pack(pady=20) # Add padding around the label
+label = tk.Label(root, text="Click to start posing!")
+label.pack(pady=20) 
+start = False
 
-# Create a button widget
+
+# def test_timer_loop(sec=10, iter=0):
+#     while iter < len(poses):    
+#         print(iter)    
+#         iter += 1
+        
+
+
+
+# create the timer
+def timer_loop(iter, sec=10):
+    if sec > 0:
+        print("TIME " + str(sec))
+        timer.config(text=f"{sec}")
+        timer.after(1000, timer_loop, iter, sec-1) # loop every 1000 milliseconds
+    else:
+        timer.config(text="")
+        image.config(file=poses[iter])
+        iter+=1
+        
+      
+        
+
+# Create a button
 def on_button_click():
-    label.config(text="Button Clicked!")
+    global start
+    
+    iter = 0
+    
+    # Toggle the start flag and update UI accordingly
+    if start:
+        # currently running -> stop posing
+        label.config(text="Click (with free hand) to start posing!")
+        button.config(text="Start")
+        start = False
+        
+        image.config(file="")
+        
+    else:
+        # currently stopped -> start posing
+        label.config(text="Click to stop posing!")
+        button.config(text="Stop")
+        start = True
+        
+        iter = 0
 
-button = tk.Button(root, text="Click Me", command=on_button_click)
+        timer_loop(iter)
+        timer_loop(iter)
+        timer_loop(iter)
+        timer_loop(iter)
+        timer_loop(iter)
+        timer_loop(iter)
+        timer_loop(iter)
+        timer_loop(iter)
+        timer_loop(iter)
+        timer_loop(iter)
+
+            
+
+button = tk.Button(root, text="Start", command=on_button_click)
 button.pack()
+
+
+image = PhotoImage(file="")
+image_label = tk.Label(root, image=image)
+image_label.pack()
+
+timer = tk.Label(root, text="")
+timer.pack(pady=20) # or whatever layout you want
+
+# modulemixer.init() # Initialize the mixer 
 
 # Start the Tkinter event loop
 root.mainloop()
