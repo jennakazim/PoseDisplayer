@@ -34,15 +34,23 @@ start = False
 
 # create the timer
 def timer_loop(iter, sec=10):
-    if sec > 0:
-        print("TIME " + str(sec))
+    if sec > 0 and iter < 9:
+        # print("TIME " + str(sec))
         timer.config(text=f"{sec}")
         timer.after(1000, timer_loop, iter, sec-1) # loop every 1000 milliseconds
-    else:
+    elif sec <= 0 and iter < 9:
         timer.config(text="")
-        image.config(file=poses[iter])
-        iter+=1
+        timer_loop(iter+1)
+    else:
+        return
         
+
+
+def change_image(iter):
+    iter+=1
+    if iter < 10:
+        image.config(file=poses[iter])
+        image_label.after(10000, change_image, iter)
       
         
 
@@ -67,18 +75,12 @@ def on_button_click():
         button.config(text="Stop")
         start = True
         
-        iter = 0
+        iter_1 = 0
+        iter_2 = 0
 
-        timer_loop(iter)
-        timer_loop(iter)
-        timer_loop(iter)
-        timer_loop(iter)
-        timer_loop(iter)
-        timer_loop(iter)
-        timer_loop(iter)
-        timer_loop(iter)
-        timer_loop(iter)
-        timer_loop(iter)
+        image.config(file=poses[0])
+        timer_loop(iter_1)
+        image_label.after(10000, change_image, iter_2)
 
             
 
