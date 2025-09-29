@@ -19,6 +19,10 @@ poses = ["images/rest.png", "images/peace.png",
          "images/rest.png", "images/fist.png"]
 
 # Create a label widget
+# add instructions before start
+# "You will be doing _ poses for 10 seconds each. The order of the individual poses is peace sign, pointer extended, both pointer and middle extended together,
+# fingers crossed, and fist. In between each individual pose, you will do the rest pose (all five fingers extended naturally). Press start when you are ready to
+# begin posing. It should take 1 minute and 40 seconds."
 label = tk.Label(root, text="Click to start posing!")
 label.pack(pady=20) 
 start = False
@@ -63,14 +67,16 @@ def on_button_click():
     # Toggle the start flag and update UI accordingly
     if start:
         # currently running -> stop posing
-        label.config(text="Click (with free hand) to start posing!")
+        label.config(text="Click to start posing!")
         button.config(text="Start")
         start = False
         
         image.config(file="")
         
     else:
+        # need to remove the stop button or it starts counting twice if they start again
         # currently stopped -> start posing
+        # button.pack_forget() for removing the button
         label.config(text="Click to stop posing!")
         button.config(text="Stop")
         start = True
