@@ -16,12 +16,14 @@ poses = ["images/rest.png", "images/peace.png",
          "images/rest.png", "images/pointer.png",
          "images/rest.png" , "images/pointerAndIndex.png",
          "images/rest.png" , "images/fingersCrossed.png",
-         "images/rest.png", "images/fist.png"]
+         "images/rest.png", "images/fist.png", 
+         "images/rest.png"]
 
 # Create a label widget
 # add instructions before start
 
-label = tk.Label(root, text='''You will be doing _ poses for 10 seconds each. The order of the individual poses is peace sign,\npointer extended, both pointer and middle extended together, fingers crossed, and fist.\nIn between each individual pose, you will do the rest pose (all five fingers extended naturally).\nPress start when you are ready to begin posing. It should take 1 minute and 40 seconds.''')
+label = tk.Label(root, text='''You will be doing _ poses for 10 seconds each. The order of the individual poses is peace sign,\npointer extended, both pointer and middle extended together, fingers crossed, and fist.\nIn between each individual pose, you will do the rest pose (all five fingers extended naturally).\nPress start when you are ready to begin posing. It should take 1 minute and 50 seconds.''',
+                 font=('Arial', 20))
 label.pack(pady=20) 
 start = False
 
@@ -29,11 +31,11 @@ start = False
 # create the timer
 def timer_loop(iter, sec=10):
     
-    if sec > 0 and iter < 10:
+    if sec > 0 and iter < 11:
         # print("TIME " + str(sec))
         timer.config(text=f"{sec}")
         timer.after(1000, timer_loop, iter, sec-1) # loop every 1000 milliseconds
-    elif sec <= 0 and iter == 9:
+    elif sec <= 0 and iter == 10:
         timer.config(text="")
         timer_loop(iter+1)
     elif sec <= 0 and iter < 10:
@@ -76,7 +78,7 @@ def on_button_click():
         image.config(file=poses[0])
         timer_loop(iter_1)
         
-        image_label.after(102000, change_image)
+        image_label.after(112000, change_image)
             
 
 button = tk.Button(root, text="Start", command=on_button_click)
@@ -87,7 +89,7 @@ image = PhotoImage(file="")
 image_label = tk.Label(root, image=image)
 image_label.pack()
 
-timer = tk.Label(root, text="")
+timer = tk.Label(root, text="", font=("Arial", 16))
 timer.pack(pady=20) # or whatever layout you want
 
 # modulemixer.init() # Initialize the mixer 
